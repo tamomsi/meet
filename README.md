@@ -25,65 +25,59 @@ The key features of Meet App include:
 * View a chart showing the number of upcoming events by city.
 
 ## User Stories:
-1. As a user, I would like to be able to filter events by city so that I can see the list of events that
-take place in that city.
 
-__Scenario:__ Filter events by city
-given I am on the main page.<br>
-__When__ I type "Amsterdam" into the search bar
-and I click the search button.<br>
-__Then__ I should see a list of events in Amsterdam
-and each event in the list should have "Amsterdam" as its location.
+1. As a user, I would like to be able to show/hide event details so that I can see more/less information about an event.
 
-2. As a user, I would like to be able to show/hide event details so that I can see more/less information about an event.
+__Scenario:__ An event element is collapsed by default<br>
+  __Given__ an event element with collapsed details<br>
+  __When__ the element is displayed<br>
+  __Then__ the element should show only basic event information
 
-__Scenario:__ Show/hide event details
-given I am on the main page.<br>
-__When__ I click on the details button of an event.<br>
-__Then__ I should see more information about the event
-and the details button should change to hide details.<br>
-__When__ I click on the hide details button of an event.<br>
-__Then__ I should see less information about the event
-and the hide details button should change back to details.
+__Scenario:__ User can expand an event to see its details<br>
+  __Given__ an event element with basic information displayed<br>
+  __When__ the "Show Details" button or icon is clicked<br>
+  __Then__ the element should expand to show event details
 
-3. As a user, I would like to be able to specify the number of events I want to view in the app so that I can see more or fewer events in the events list at once.
+__Scenario:__ User can collapse an event to hide its details<br>
+  __Given__ an event element with expanded details displayed<br>
+  __When__ the "Hide Details" button or icon is clicked<br>
+  __Then__ the element should collapse to show only basic event information<br>
 
-__Scenario:__ Specify the number of events to view
-given I am on the main page. <br>
-__When__ I select "5" from the events per page dropdown. <br>
-__Then__ I should see a list of 5 events
-and the number of events in the list should be 5. <br>
-__When__ I select "10" from the events per page dropdown. <br>
-__Then__ I should see a list of 10 events
-and the number of events in the list should be 10. 
+2. As a user, I would like to be able to specify the number of events I want to view in the app so that I can see more or fewer events in the events list at once.
 
-4. As a user, I would like to be able to use the app when offline so that I can see the events I viewed the last time I was online.
+__Scenario:__ When user hasn't specified a number, 32 is the default number<br>
+  __Given__ an events list element<br>
+  __When__ the element is displayed<br>
+  __Then__ the element should show up to 32 events
 
-__Scenario:__ Use the app when offline
-given I am on the main page and I have an internet connection.<br>
-__When__ I view a list of events.<br>
-__Then__ the list of events should be cached
-and I should be able to view the list of events when I am offline.<br>
-__When__ I try to search for events without an internet connection.<br>
-__Then__ I should see a message that I am offline and cannot search for events.
+__Scenario:__ User can change the number of events they want to see<br>
+  __Given__ an events list element<br>
+  __When__ the user specifies a different number of events to view<br>
+  __Then__ the element should show up to the specified number of events
 
-5. As a user, I would like to be able to add the app shortcut to my home screen so that I can open the app faster.
 
-__Scenario:__ Add app shortcut to home screen,
-given I am on the main page on a mobile device.<br>
-__When__ I click on the "Add to Home Screen" button.<br>
-__Then__ the app should be added to my home screen
-and I should be able to open the app directly from my home screen.
+3. As a user, I would like to be able to use the app when offline so that I can see the events I viewed the last time I was online.
 
-6. As a user, I would like to be able to see a chart showing the upcoming events in each city so that I know what events are organized in which city.
+__Scenario:__ Show cached data when there's no internet connection<br>
+  __Given__ an app element<br>
+   the app has cached data available<br>
+  __When__ the app is launched without an internet connection<br>
+  __Then__ the app should display the cached data
 
-__Scenario:__ See a chart showing upcoming events in each city,
-given I am on the main page.<br>
-__When__ I click on the "View Chart" button.<br>
-__Then__ I should see a chart showing the upcoming events in each city
-and the chart should be updated based on my search results.<br>
-__When__ I search for events in a different city.<br>
-__Then__ the chart should update to show the upcoming events in the new city.
+__Scenario:__ Show error when user changes the settings (city, time range)<br>
+  __Given__ an app element<br>
+  And the app is launched without an internet connection<br>
+  __When__ the user attempts to change the city or time range settings<br>
+  __Then__ the app should display an error message
+
+
+4. As a user, I would like to be able to see a chart showing the upcoming events in each city so that I know what events are organized in which city.
+
+__Scenario:__ Show a chart with the number of upcoming events in each city<br>
+  __Given__ an events data element<br>
+  __When__ the app is launched and events data is available<br>
+  __Then__ the element should display a chart showing the number of upcoming events in each city
+
 
 
 
