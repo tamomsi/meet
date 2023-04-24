@@ -79,7 +79,13 @@ __Scenario:__ Show a chart with the number of upcoming events in each city<br>
   __Then__ the element should display a chart showing the number of upcoming events in each city
 
 
+## Use of Serverless functions
 
+In my Meet App I will be using a serverless function (also known as FaaS), which offers several advantages, such as not having to manage my own server, only paying for the resources I use, and autoscale being included by default.
+
+To use a serverless function in my app, I will write the code for the function and then deploy it on a FaaS platform, Amazon Web Services (AWS) Lambda, which allows me to upload my code and set up triggers for when the function should be executed.
+
+In the Meet app I will use a serverless function to handle user authentication or to process and store user data. By using a FaaS platform, I do not need to worry about managing the server infrastructure or paying for unused resources. Instead, I can focus on writing and deploying my app code, while the FaaS platform handles the scaling and execution of my serverless functions.
 
 
 
