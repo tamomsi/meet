@@ -10,7 +10,7 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
-    numberOfEvents: 32
+    numberOfEvents: 32,
   };
 
   extractLocations = (events) => {
@@ -20,14 +20,17 @@ class App extends Component {
 
   updateEvents = (location, eventCount) => {
     getEvents().then((events) => {
-      const locationEvents = location === 'all' ? events : events.filter((event) => event.location === location);
+      let locationEvents = events;
+      if (location && location !== 'all') {
+        locationEvents = events.filter((event) => event.location === location);
+      }
       const limitedEvents = locationEvents.slice(0, eventCount || this.state.numberOfEvents);
       this.setState({
         events: limitedEvents,
         numberOfEvents: eventCount || this.state.numberOfEvents,
       });
     });
-  };
+  };  
 
   componentWillUnmount() {
     this.isUnmounted = true;

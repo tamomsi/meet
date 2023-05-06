@@ -8,10 +8,13 @@ class NumberOfEvents extends Component {
     events: [],
   };
 
-  handleInputChange = (event) => {
+  handleInputChanged = (event) => {
     const value = event.target.value;
-    this.setState({ numberOfEvents: value });
-  };
+    this.setState({
+      numberOfEvents: value,
+    });
+    this.props.updateEvents(null, value);
+  }
 
   getEvents = async () => {
     NProgress.start();
@@ -24,15 +27,15 @@ class NumberOfEvents extends Component {
 
   render() {
     return (
-      <div className="NumberOfEvents">
+      <div className='NumberOfEvents'>
+        <label htmlFor='numberOfEvents'>Number of Events:</label>
         <input
-          type="number"
-          className="event"
+          type='number'
+          id='numberOfEvents'
+          className='event'
           value={this.state.numberOfEvents}
-          onChange={this.handleInputChange}
+          onChange={this.handleInputChanged}
         />
-        <ul className="AmountOfEvents">
-        </ul>
       </div>
     );
   }
