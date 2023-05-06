@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Event from './Event';
+import { getEvents } from './api';
 
 class EventList extends Component {
   constructor(props) {
@@ -7,6 +8,18 @@ class EventList extends Component {
     this.state = {
       events: []
     };
+    this.isUnmounted = false;
+  }
+
+  async componentDidMount() {
+    const events = await getEvents();
+    if (!this.isUnmounted) {
+      this.setState({ events });
+    }
+  }
+
+  componentWillUnmount() {
+    this.isUnmounted = true;
   }
 
   render() {
