@@ -60,10 +60,11 @@ describe('<App /> integration', () => {
 
   test('get list of all events when user selects "See all cities"', async () => {
     const AppWrapper = mount(<App />);
-    const suggestionItems = AppWrapper.find(CitySearch).find('.suggestions li');
-    await suggestionItems.at(suggestionItems.length - 1).simulate('click');
+    const suggestionsItems = AppWrapper.find(CitySearch).find('.suggestions li');
+    await suggestionsItems.at(suggestionsItems.length - 1).simulate('click');
     const allEvents = await getEvents();
-    expect(AppWrapper.state('events')).toEqual(allEvents);
+    const shownEvents = allEvents.slice(0,32);
+    expect(AppWrapper.state('events')).toEqual(shownEvents);
     AppWrapper.unmount();
-  });
+});
 });

@@ -2,12 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { mockData } from '../mock-data';
 import NumberOfEvents from '../NumberOfEvents';
+import App from '../App';
+import EventList from '../EventList';
 
 describe('<NumberOfEvents /> component', () => {
     let NumberOfEventsWrapper;
   
     beforeAll(() => {
-      NumberOfEventsWrapper = shallow(<NumberOfEvents />);
+      NumberOfEventsWrapper = shallow(<NumberOfEvents updateEvents={() => {}} />);
     });
   
     test('render number of events input', () => {
