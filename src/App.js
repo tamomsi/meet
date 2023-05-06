@@ -11,7 +11,7 @@ class App extends Component {
     events: [],
     locations: [],
     numberOfEvents: 32
-  }
+  };
 
   extractLocations = (events) => {
     const locations = events.map((event) => event.location);
@@ -20,32 +20,41 @@ class App extends Component {
 
   updateEvents = (location, eventCount) => {
     getEvents().then((events) => {
-      const locationEvents = (location === 'all') ?
-        events :
-        events.filter((event) => event.location === location);
+      const locationEvents = location === 'all' ? events : events.filter((event) => event.location === location);
       const limitedEvents = locationEvents.slice(0, eventCount || this.state.numberOfEvents);
       this.setState({
         events: limitedEvents,
-        numberOfEvents: eventCount || this.state.numberOfEvents
+        numberOfEvents: eventCount || this.state.numberOfEvents,
       });
     });
   };
 
-  componentDidMount() {
-    this.mounted = true;
+  componentWillUnmount() {
+    this.isUnmounted = true;
+  }
+
+  async componentDidMount() {
+    const events = await getEvents();
+    if (!this.isUnmounted) {
+      this.setState({
+        events,
+        locations: localStorage.getItem('locations')
+          ? JSON.parse(localStorage.getItem('locations'))
+          : [],
+      });
+    }
+  }
+
+  getEvents = () => {
     getEvents().then((events) => {
       if (this.mounted) {
         this.setState({
           events: events,
-          locations: this.extractLocations(events)
+          locations: this.extractLocations(events),
         });
       }
     });
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
+  };
 
   render() {
     return (
