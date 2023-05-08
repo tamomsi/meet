@@ -21,9 +21,18 @@ describe('<App /> component', () => {
     expect(AppWrapper.find(CitySearch)).toHaveLength(1);
   });
 
+  test('renders without crashing', () => {
+    expect(AppWrapper).toHaveLength(1);
+  });
+
   test('render NumberOfEvents', () => {
     expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
   });
+});
+
+test('renders NumberOfEvents and CitySearch components', () => {
+  expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
+  expect(AppWrapper.find(CitySearch)).toHaveLength(1);
 });
 
 describe('<App /> integration', () => {
@@ -67,4 +76,16 @@ describe('<App /> integration', () => {
     expect(AppWrapper.state('events')).toEqual(shownEvents);
     AppWrapper.unmount();
 });
+
+test('updates events and number of events when updateEvents is called', () => {
+  const locations = ['Berlin', 'London'];
+  const numberOfEvents = 10;
+  const AppWrapper = mount(<App />);
+  AppWrapper.instance().updateEvents('Berlin', numberOfEvents, locations);
+  expect(AppWrapper.state('events')).not.toEqual([]);
+  expect(AppWrapper.state('numberOfEvents')).toEqual(numberOfEvents);
+});
+
+
+
 });

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import NProgress from 'nprogress';
-import { mockData } from './mock-data';
+import { getEvents } from './api';
 
 class NumberOfEvents extends Component {
   state = {
@@ -15,15 +14,6 @@ class NumberOfEvents extends Component {
     });
     this.props.updateEvents(null, value);
   }
-
-  getEvents = async () => {
-    NProgress.start();
-
-    if (window.location.href.startsWith("http://localhost")) {
-      NProgress.done();
-      return mockData;
-    }
-  };
 
   render() {
     return (

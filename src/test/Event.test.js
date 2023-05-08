@@ -31,5 +31,5 @@ describe("<Event/> component", () => {
     EventWrapper.find(".details-btn").simulate("click");
     expect(EventWrapper.find(".event-details")).toHaveLength(0);
   });
-   
+  
 });

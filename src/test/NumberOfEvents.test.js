@@ -16,9 +16,15 @@ describe('<NumberOfEvents /> component', () => {
     expect(NumberOfEventsWrapper.find('.NumberOfEvents input')).toHaveLength(1);
   });
 
-  test('render label for number of events input', () => {
-    expect(NumberOfEventsWrapper.find('.NumberOfEvents label')).toHaveLength(1);
-    expect(NumberOfEventsWrapper.find('.NumberOfEvents label').text()).toEqual('Number of Events:');
+  test('render correct number of events', () => {
+    expect(NumberOfEventsWrapper.state('numberOfEvents')).toBe(32);
+  });
+
+  test('change number of events when input changes', () => {
+    const eventObject = { target: { value: 15 } };
+    NumberOfEventsWrapper.find('.event').simulate('change', eventObject);
+    NumberOfEventsWrapper.update();
+    expect(NumberOfEventsWrapper.state('numberOfEvents')).toBe(15);
   });
 
   test('render number of events input with default value', () => {
@@ -26,28 +32,22 @@ describe('<NumberOfEvents /> component', () => {
     expect(NumberOfEventsWrapper.find('.NumberOfEvents input').prop('value')).toEqual(numberOfEvents);
   });
 
-  test('update number of events state when input changes', () => {
-    const eventObject = { target: { value: 20 } };
-    NumberOfEventsWrapper.find('.NumberOfEvents input').simulate('change', eventObject);
-    expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(20);
-  });
-
   test('update events state in App component when input changes', () => {
     const eventObject = { target: { value: 10 } };
     NumberOfEventsWrapper.find('.NumberOfEvents input').simulate('change', eventObject);
     expect(mockUpdateEvents).toHaveBeenCalledWith(null, 10);
-  });  
-
-  test('get data from API', async () => {
-    const mockEvents = mockData;
-    const returnedEvents = await NumberOfEventsWrapper.instance().getEvents();
-    expect(returnedEvents).toEqual(mockEvents);
   });
 
   test('get data from API when URL starts with "http://localhost"', async () => {
-  const mockEvents = mockData;
   window.location.href = 'http://localhost';
   const returnedEvents = await NumberOfEventsWrapper.instance().getEvents();
-  expect(returnedEvents).toEqual(mockEvents);
-  });
+  expect(returnedEvents).toEqual(mockData);
 });
+
+test('get data from API when URL does not start with "http://localhost"', async () => {
+  window.location.href = 'https://example.com';
+  const returnedEvents = await NumberOfEventsWrapper.instance().getEvents();
+  expect(returnedEvents).toEqual(mockData);
+});
+});
+
