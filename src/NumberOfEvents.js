@@ -36,6 +36,8 @@ class NumberOfEvents extends Component {
           value={this.state.numberOfEvents}
           onChange={this.handleInputChanged}
         />
+        <ul className="AmountOfEvents">
+          </ul>
       </div>
     );
   }
