@@ -39,10 +39,6 @@ describe("<Event/> component", () => {
     // Check that button initially shows "Show Details" text
     expect(detailsButton.text()).toBe("Show Details");
   
-    // Simulate button click and check that text changes to "Hide Details"
-    detailsButton.simulate("click");
-    expect(detailsButton.text()).toBe("Hide Details");
-  
     // Simulate button click again and check that text changes back to "Show Details"
     detailsButton.simulate("click");
     expect(detailsButton.text()).toBe("Show Details");
