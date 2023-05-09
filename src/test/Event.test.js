@@ -31,5 +31,22 @@ describe("<Event/> component", () => {
     EventWrapper.find(".details-btn").simulate("click");
     expect(EventWrapper.find(".event-details")).toHaveLength(0);
   });
+
+  test("changes button text when clicked", () => {
+    const EventWrapper = shallow(<Event event={mockData[0]} />);
+    const detailsButton = EventWrapper.find(".details-btn");
+  
+    // Check that button initially shows "Show Details" text
+    expect(detailsButton.text()).toBe("Show Details");
+  
+    // Simulate button click and check that text changes to "Hide Details"
+    detailsButton.simulate("click");
+    expect(detailsButton.text()).toBe("Hide Details");
+  
+    // Simulate button click again and check that text changes back to "Show Details"
+    detailsButton.simulate("click");
+    expect(detailsButton.text()).toBe("Show Details");
+  });
+  
   
 });

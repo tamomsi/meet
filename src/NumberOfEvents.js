@@ -41,4 +41,5 @@ class NumberOfEvents extends Component {
   }
 }
 
+
 export default NumberOfEvents;
