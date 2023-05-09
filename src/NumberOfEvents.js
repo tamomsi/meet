@@ -7,6 +7,15 @@ class NumberOfEvents extends Component {
     events: [],
   };
 
+  async getEvents() {
+    const { numberOfEvents } = this.state;
+    const events = await getEvents();
+    this.setState({
+      events: events.slice(0, numberOfEvents),
+    });
+    return events; // Add this line to return the events array
+  }  
+
   handleInputChanged = (event) => {
     const value = event.target.value;
     this.setState({
@@ -18,7 +27,6 @@ class NumberOfEvents extends Component {
   render() {
     return (
       <div className='NumberOfEvents'>
-        <label htmlFor='numberOfEvents'>Number of Events:</label>
         <input
           type='number'
           id='numberOfEvents'

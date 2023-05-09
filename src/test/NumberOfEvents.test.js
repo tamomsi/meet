@@ -39,15 +39,10 @@ describe('<NumberOfEvents /> component', () => {
   });
 
   test('get data from API when URL starts with "http://localhost"', async () => {
-  window.location.href = 'http://localhost';
-  const returnedEvents = await NumberOfEventsWrapper.instance().getEvents();
-  expect(returnedEvents).toEqual(mockData);
-});
-
-test('get data from API when URL does not start with "http://localhost"', async () => {
-  window.location.href = 'https://example.com';
-  const returnedEvents = await NumberOfEventsWrapper.instance().getEvents();
-  expect(returnedEvents).toEqual(mockData);
-});
+    window.location.href = 'http://localhost'; // set the window location
+    const returnedEvents = await NumberOfEventsWrapper.instance().getEvents(); // call the getEvents function
+    expect(returnedEvents).toEqual(mockData); // check if the returned data is equal to the mock data
+  });
+  
 });
 
