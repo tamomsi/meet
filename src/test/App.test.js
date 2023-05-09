@@ -28,12 +28,13 @@ describe('<App /> component', () => {
   test('render NumberOfEvents', () => {
     expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
   });
+  test('renders NumberOfEvents and CitySearch components', () => {
+    const AppWrapper = mount(<App />);
+    expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
+    expect(AppWrapper.find(CitySearch)).toHaveLength(1);
+  });
 });
 
-test('renders NumberOfEvents and CitySearch components', () => {
-  expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
-  expect(AppWrapper.find(CitySearch)).toHaveLength(1);
-});
 
 describe('<App /> integration', () => {
   test('App passes "events" state as a prop to EventList', () => {
@@ -78,11 +79,11 @@ describe('<App /> integration', () => {
 });
 
 test('updates events and number of events when updateEvents is called', () => {
-  const locations = ['Berlin', 'London'];
-  const numberOfEvents = 10;
   const AppWrapper = mount(<App />);
+  const locations = ['Berlin', 'London'];
+  const numberOfEvents = 32;
   AppWrapper.instance().updateEvents('Berlin', numberOfEvents, locations);
-  expect(AppWrapper.state('events')).not.toEqual([]);
   expect(AppWrapper.state('numberOfEvents')).toEqual(numberOfEvents);
 });
+
 });

@@ -10,6 +10,8 @@ class CitySearch extends Component {
       handleInputChanged = (event) => {
         const value = event.target.value;
         this.setState({showSuggestions:true});
+        console.log(this.props.locations);
+
         const suggestions = this.props.locations.filter((location) => {
           return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
         });
@@ -19,13 +21,13 @@ class CitySearch extends Component {
         });
       };
 
-      handleItemClicked = (suggestion) => {
+      handleItemClicked = (suggestions) => {
         this.setState({
-          query: suggestion,
+          query: suggestions,
           showSuggestions: false
         });
-
-        this.props.updateEvents(suggestion);
+        console.log(this.props.locations);
+        this.props.updateEvents(suggestions);
       }
 
   render() {
@@ -40,16 +42,20 @@ class CitySearch extends Component {
       }}
       />
       <ul className="suggestions" style={this.state.showSuggestions ? {}: { display: 'none' }}>
-      {this.state.suggestions.map((suggestion) => (
+      {this.state.suggestions.map((suggestions) => (
        <li
-      key={suggestion}
-      onClick={() => this.handleItemClicked(suggestion)}
-    >{suggestion}</li>
+      key={suggestions}
+      onClick={() => this.handleItemClicked(suggestions)}
+    >{suggestions}</li>
   ))}
+  <li onClick={() => this.handleItemClicked("all")}>
+  <b>See all cities</b>
+</li>
       </ul>
       </div>
     );
   }
 }
+
 
 export default CitySearch;
