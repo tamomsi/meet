@@ -85,4 +85,5 @@ test('updates events and number of events when updateEvents is called', () => {
   expect(AppWrapper.state('events')).not.toEqual([]);
   expect(AppWrapper.state('numberOfEvents')).toEqual(numberOfEvents);
 });
+
 });

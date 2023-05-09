@@ -3,7 +3,7 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-import { getEvents } from './api';
+import { getEvents  } from './api';
 import './nprogress.css';
 
 class App extends Component {
@@ -11,11 +11,6 @@ class App extends Component {
     events: [],
     locations: [],
     numberOfEvents: 32,
-  };
-
-  extractLocations = (events) => {
-    const locations = events.map((event) => event.location);
-    return [...new Set(locations)];
   };
 
   updateEvents = (location, eventCount) => {
@@ -47,17 +42,6 @@ class App extends Component {
       });
     }
   }
-
-  getEvents = () => {
-    getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({
-          events: events,
-          locations: this.extractLocations(events),
-        });
-      }
-    });
-  };
 
   render() {
     return (
