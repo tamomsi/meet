@@ -43,6 +43,6 @@ describe('<NumberOfEvents /> component', () => {
     const returnedEvents = await NumberOfEventsWrapper.instance().getEvents(); // call the getEvents function
     expect(returnedEvents).toEqual(mockData); // check if the returned data is equal to the mock data
   });
-  
+    
 });
 

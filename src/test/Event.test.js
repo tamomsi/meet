@@ -43,5 +43,4 @@ describe("<Event/> component", () => {
     detailsButton.simulate("click");
     expect(detailsButton.text()).toBe("Show Details");
   });
-  
 });
