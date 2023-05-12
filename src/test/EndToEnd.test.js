@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+
 
 describe('show/hide an event details', () => {
   let browser;
@@ -31,4 +32,5 @@ describe('show/hide an event details', () => {
     const eventDetails = await page.$('.event .event__Details');
     expect(eventDetails).toBeNull();
   });
+
 });
