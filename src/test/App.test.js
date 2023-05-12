@@ -85,5 +85,4 @@ test('updates events and number of events when updateEvents is called', () => {
   AppWrapper.instance().updateEvents('Berlin', numberOfEvents, locations);
   expect(AppWrapper.state('numberOfEvents')).toEqual(numberOfEvents);
 });
-
 });
