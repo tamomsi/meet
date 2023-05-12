@@ -13,6 +13,7 @@ class NumberOfEvents extends Component {
     this.setState({
       events: events.slice(0, numberOfEvents),
     });
+    console.log("Number of events:", numberOfEvents);
     return events; // Add this line to return the events array
   }  
 
