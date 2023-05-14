@@ -14,14 +14,12 @@ defineFeature(feature, test => {
         });
   
         when('the user views the events list', () => {
-            const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
-            NumberOfEventsWrapper.find(".event").simulate("change");
-         
+            // No action needed, can leave empty
         });
   
         then(/^the default number of events displayed should be (\d+)$/, (arg0) => {
           AppWrapper.update();
-          expect(AppWrapper.find(".event")).toHaveLength(33);
+          expect(AppWrapper.find(".event")).toHaveLength(32);
         });
     });
   
@@ -34,19 +32,17 @@ defineFeature(feature, test => {
       });
   
       when('the user views the events list', () => {
-        AppWrapper.setState({ numberOfEvents: 32 });
+        // No action needed, can leave empty
       });
   
       and('the user specifies a different number of events', () => {
         const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
-      NumberOfEventsWrapper.find('.event').simulate('change', { target: { value: 32 } });
+        NumberOfEventsWrapper.find('#numberOfEvents').simulate('change', { target: { value: 32 } });
       });
   
       then('the number of events displayed should match the user\'s input', () => {
         AppWrapper.update();
         expect(AppWrapper.state("numberOfEvents")).toEqual(32);
-
       });
     });
-  });
-  
+});

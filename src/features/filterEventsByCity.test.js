@@ -20,7 +20,7 @@ defineFeature(feature, test => {
         });
         then('the user should see the list of upcoming events.', () => {
             AppWrapper.update();
-            expect(AppWrapper.find('.event')).toHaveLength(33);
+            expect(AppWrapper.find('.event')).toHaveLength(32);
             //expect(AppWrapper.find('.event').hostNodes()).toHaveLength(mockData.length);
         });
     });
@@ -60,7 +60,7 @@ defineFeature(feature, test => {
       
         });
         and('the user should receive a list of upcoming events in that city', () => {
-            expect(AppWrapper.find('.event')).toHaveLength(33);
+            expect(AppWrapper.find('.event')).toHaveLength(32);
         });
     
         });

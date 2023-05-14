@@ -3,7 +3,7 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-import { getEvents, extractLocations   } from './api';
+import { getEvents, extractLocations } from './api';
 import './nprogress.css';
 
 class App extends Component {
@@ -35,7 +35,7 @@ class App extends Component {
     const events = await getEvents();
     if (!this.isUnmounted) {
       this.setState({
-        events,
+        events: events.slice(0, this.state.numberOfEvents - 1),
         locations: extractLocations(events),
       });
     }
@@ -47,7 +47,6 @@ class App extends Component {
         <NumberOfEvents numberOfEvents={this.state.numberOfEvents} updateEvents={this.updateEvents} />
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} onInputChanged={this.handleInputChanged}/>
         <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
-
       </div>
     );
   }

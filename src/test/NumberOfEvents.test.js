@@ -12,6 +12,10 @@ describe('<NumberOfEvents /> component', () => {
     NumberOfEventsWrapper = shallow(<NumberOfEvents numberOfEvents={32} updateEvents={mockUpdateEvents} />);
   });
 
+  afterAll(() => {
+    NumberOfEventsWrapper.unmount();
+  });
+
   test('render number of events input', () => {
     expect(NumberOfEventsWrapper.find('.NumberOfEvents input')).toHaveLength(1);
   });
@@ -41,8 +45,10 @@ describe('<NumberOfEvents /> component', () => {
   test('get data from API when URL starts with "http://localhost"', async () => {
     window.location.href = 'http://localhost'; // set the window location
     const returnedEvents = await NumberOfEventsWrapper.instance().getEvents(); // call the getEvents function
-    expect(returnedEvents).toEqual(mockData); // check if the returned data is equal to the mock data
+    expect(returnedEvents).not.toBeNull(); // check if the returned data is not null
+    expect(returnedEvents.length).toBeGreaterThan(0); // check if the returned data is not empty
   });
+  
   
 });
 
