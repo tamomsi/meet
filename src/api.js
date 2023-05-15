@@ -78,18 +78,16 @@ const removeQuery = () => {
 
 const getToken = async (code) => {
   try {
-    const encodeCode = encodeURIComponent(code);
+      const encodeCode = encodeURIComponent(code);
 
-    const response = await fetch('https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token' + '/' + encodeCode);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const { access_token } = await response.json();
-    access_token && localStorage.setItem("access_token", access_token);
-    return access_token;
-  } catch (error) {
-    console.error(error);
-    throw error;
+      const response = await fetch( 'https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token' + '/' + encodeCode);
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const { access_token } = await response.json();
+      access_token && localStorage.setItem("access_token", access_token);
+      return access_token;
+  } catch(error) {
+      error.json();
   }
-};
-
+}
