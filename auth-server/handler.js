@@ -63,6 +63,7 @@ module.exports.getAccessToken = async (event) => {
         statusCode: 200,
         headers: {
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true, // Allow credentials
         },
         body: JSON.stringify(token),
       };
@@ -74,7 +75,7 @@ module.exports.getAccessToken = async (event) => {
         body: JSON.stringify(err),
       };
     });
-}
+};
 
 module.exports.getCalendarEvents = async (event) => {
   const oAuth2Client = new google.auth.OAuth2(
@@ -91,10 +92,7 @@ module.exports.getCalendarEvents = async (event) => {
     calendar.events.list(
       {
         calendarId: calendar_id,
-        auth: {
-          ...oAuth2Client,
-          credentials: "include",
-        },
+        auth: oAuth2Client,
         timeMin: new Date().toISOString(),
         singleEvents: true,
         orderBy: "startTime",
@@ -112,8 +110,8 @@ module.exports.getCalendarEvents = async (event) => {
       return {
         statusCode: 200,
         headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "*", // Allow all origins
+          "Access-Control-Allow-Credentials": true, // Allow credentials
         },
         body: JSON.stringify({ events: results.data.items }),
       };
