@@ -1,7 +1,6 @@
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const calendar = google.calendar("v3");
-
 const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
 const credentials = {
@@ -15,9 +14,7 @@ const credentials = {
   redirect_uris: ["https://tamomsi.github.io/meet/"],
   javascript_origins: ["https://tamomsi.github.io", "http://localhost:3000"],
 };
-
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
-
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
   client_secret,
@@ -48,7 +45,6 @@ module.exports.getAccessToken = async (event) => {
     client_secret,
     redirect_uris[0]
   );
-
   const code = decodeURIComponent(`${event.pathParameters.code}`);
 
   return new Promise((resolve, reject) => {
@@ -73,6 +69,10 @@ module.exports.getAccessToken = async (event) => {
       console.error(err);
       return {
         statusCode: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
         body: JSON.stringify(err),
       };
     });
@@ -84,9 +84,9 @@ module.exports.getCalendarEvents = async (event) => {
     client_secret,
     redirect_uris[0]
   );
-
-  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
-
+  const access_token = decodeURIComponent(
+    `${event.pathParameters.access_token}`
+  );
   oAuth2Client.setCredentials({ access_token });
 
   return new Promise((resolve, reject) => {
@@ -111,17 +111,21 @@ module.exports.getCalendarEvents = async (event) => {
       return {
         statusCode: 200,
         headers: {
-          "Access-Control-Allow-Origin": "*", // Allow all origins
-          "Access-Control-Allow-Credentials": true, // Allow credentials
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify({ events: results.data.items }),
       };
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((err) => {
+      console.error(err);
       return {
         statusCode: 500,
-        body: JSON.stringify(error),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify(err),
       };
     });
 };
