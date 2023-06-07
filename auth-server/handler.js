@@ -56,7 +56,7 @@ module.exports.getAccessToken = async (event) => {
     });
   })
     .then((token) => {
-      return {
+      const response = {
         statusCode: 200,
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -64,10 +64,11 @@ module.exports.getAccessToken = async (event) => {
         },
         body: JSON.stringify(token),
       };
+      return response;
     })
     .catch((err) => {
       console.error(err);
-      return {
+      const response = {
         statusCode: 500,
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -75,6 +76,7 @@ module.exports.getAccessToken = async (event) => {
         },
         body: JSON.stringify(err),
       };
+      return response;
     });
 };
 
@@ -108,7 +110,7 @@ module.exports.getCalendarEvents = async (event) => {
     );
   })
     .then((results) => {
-      return {
+      const response = {
         statusCode: 200,
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -116,10 +118,11 @@ module.exports.getCalendarEvents = async (event) => {
         },
         body: JSON.stringify({ events: results.data.items }),
       };
+      return response;
     })
     .catch((err) => {
       console.error(err);
-      return {
+      const response = {
         statusCode: 500,
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -127,5 +130,6 @@ module.exports.getCalendarEvents = async (event) => {
         },
         body: JSON.stringify(err),
       };
+      return response;
     });
 };
