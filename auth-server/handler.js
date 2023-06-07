@@ -1,16 +1,9 @@
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const calendar = google.calendar("v3");
-/**
- * SCOPES allows you to set access levels; this is set to readonly for now because you don't have access rights to
- * update the calendar yourself. For more info, check out the SCOPES documentation at this link: https://developers.google.com/identity/protocols/oauth2/scopes
- */
+
 const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
-/**
- * Credentials are those values required to get access to your calendar. If you see “process.env” this means
- * the value is in the “config.json” file. This is a best practice as it keeps your API secrets hidden. Please remember to add “config.json” to your “.gitignore” file.
- */
 const credentials = {
   client_id: process.env.CLIENT_ID,
   project_id: process.env.PROJECT_ID,
@@ -22,6 +15,7 @@ const credentials = {
   redirect_uris: ["https://tamomsi.github.io/meet/"],
   javascript_origins: ["https://tamomsi.github.io", "http://localhost:3000"]
 };
+
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
@@ -30,7 +24,6 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 
 module.exports.getAuthURL = async () => {
-  
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -39,7 +32,9 @@ module.exports.getAuthURL = async () => {
   return {
     statusCode: 200,
     headers: {
-      "Access-Control-Allow-Origin": "*"
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET"
     },
     body: JSON.stringify({
       authUrl: authUrl
@@ -48,13 +43,11 @@ module.exports.getAuthURL = async () => {
 };
 
 module.exports.getAccessToken = async (event) => {
-  
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-
   const code = decodeURIComponent(`${event.pathParameters.code}`);
 
   return new Promise((resolve, reject) => {
@@ -66,39 +59,42 @@ module.exports.getAccessToken = async (event) => {
     });
   })
     .then((token) => {
-      return {
+      const response = {
         statusCode: 200,
         headers: {
-          'Access-Control-Allow-Origin': '*'
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "GET"
         },
         body: JSON.stringify(token),
       };
+      return response;
     })
     .catch((err) => {
       console.error(err);
-      return {
+      const response = {
         statusCode: 500,
         headers: {
-          'Access-Control-Allow-Origin': '*'
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "GET"
         },
-        body: JSON.stringify(err)
+        body: JSON.stringify(err),
       };
+      return response;
     });
 };
 
 module.exports.getCalendarEvents = async (event) => {
-
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-
   const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
   oAuth2Client.setCredentials({ access_token });
 
   return new Promise((resolve, reject) => {
-
     calendar.events.list(
       {
         calendarId: calendar_id,
@@ -116,23 +112,29 @@ module.exports.getCalendarEvents = async (event) => {
       }
     );
   })
-  .then( results => {
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify({ events: results.data.items })
-    };
-  })
-  .catch((err) => {
-    console.error(err);
-    return {
-      statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify(err)
-    };
-  });
+    .then((results) => {
+      const response = {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "GET"
+        },
+        body: JSON.stringify({ events: results.data.items }),
+      };
+      return response;
+    })
+    .catch((err) => {
+      console.error(err);
+      const response = {
+        statusCode: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "GET"
+        },
+        body: JSON.stringify(err),
+      };
+      return response;
+    });
 };
