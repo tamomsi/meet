@@ -35,18 +35,22 @@ const getResponseHeaders = (event) => {
 
 module.exports.getAuthURL = async () => {
   const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: "offline",
+    access_type: 'offline',
     scope: SCOPES,
   });
 
   return {
     statusCode: 200,
-    headers: getResponseHeaders(event),
+    headers: {
+      'Access-Control-Allow-Origin': 'https://tamomsi.github.io',
+      'Access-Control-Allow-Credentials': true,
+    },
     body: JSON.stringify({
       authUrl: authUrl,
     }),
   };
 };
+
 
 module.exports.getAccessToken = async (event) => {
   const oAuth2Client = new google.auth.OAuth2(
