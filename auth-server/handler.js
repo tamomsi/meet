@@ -38,7 +38,7 @@ const getResponseHeaders = (event) => {
   return headers;
 };
 
-module.exports.getAuthURL = async () => {
+module.exports.getAuthURL = async (event) => {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
