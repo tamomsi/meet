@@ -25,32 +25,33 @@ const oAuth2Client = new google.auth.OAuth2(
 const getResponseHeaders = (event) => {
   const origin = event.headers.origin;
 
-  return {
-    "Access-Control-Allow-Origin": origin,
+  const headers = {
     "Access-Control-Allow-Credentials": true,
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
   };
+
+  if (origin) {
+    headers["Access-Control-Allow-Origin"] = origin;
+  }
+
+  return headers;
 };
 
 module.exports.getAuthURL = async () => {
   const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
+    access_type: "offline",
     scope: SCOPES,
   });
 
   return {
     statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': 'https://tamomsi.github.io',
-      'Access-Control-Allow-Credentials': true,
-    },
+    headers: getResponseHeaders(event),
     body: JSON.stringify({
       authUrl: authUrl,
     }),
   };
 };
-
 
 module.exports.getAccessToken = async (event) => {
   const oAuth2Client = new google.auth.OAuth2(
@@ -131,4 +132,3 @@ module.exports.getCalendarEvents = async (event) => {
       };
     });
 };
-
