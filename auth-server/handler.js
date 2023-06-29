@@ -35,8 +35,6 @@ module.exports.getAuthURL = async () => {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
     },
     body: JSON.stringify({
       authUrl: authUrl,
@@ -67,8 +65,6 @@ module.exports.getAccessToken = async (event) => {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-          "Access-Control-Allow-Methods": "GET, OPTIONS",
         },
         body: JSON.stringify(token),
       };
@@ -117,8 +113,6 @@ module.exports.getCalendarEvents = async (event) => {
         headers: {
           "Access-Control-Allow-Origin": "*", // Allow all origins
           "Access-Control-Allow-Credentials": true, // Allow credentials
-          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-          "Access-Control-Allow-Methods": "GET, OPTIONS",
         },
         body: JSON.stringify({ events: results.data.items }),
       };
