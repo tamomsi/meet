@@ -5,12 +5,14 @@ import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { getEvents, extractLocations } from './api';
 import './nprogress.css';
+import { InfoAlert } from './Alert';
 
 class App extends Component {
   state = {
     events: [],
     locations: [],
     numberOfEvents: 32,
+    infoAlertText: '', // New state for the info alert text
   };
 
   updateEvents = (location, eventCount) => {
@@ -25,7 +27,7 @@ class App extends Component {
         numberOfEvents: eventCount || this.state.numberOfEvents,
       });
     });
-  };  
+  };
 
   componentWillUnmount() {
     this.isUnmounted = true;
@@ -41,11 +43,24 @@ class App extends Component {
     }
   }
 
+  handleInputChanged = (inputValue) => {
+    this.setState({
+      infoAlertText: inputValue, // Set the info alert text in the state
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <NumberOfEvents numberOfEvents={this.state.numberOfEvents} updateEvents={this.updateEvents} />
-        <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} onInputChanged={this.handleInputChanged}/>
+        <CitySearch
+          locations={this.state.locations}
+          updateEvents={this.updateEvents}
+          onInputChanged={this.handleInputChanged} // Pass onInputChanged prop
+        />
+        <div className="alerts-container">
+          {this.state.infoAlertText && <InfoAlert text={this.state.infoAlertText} />}
+        </div>
         <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
       </div>
     );
