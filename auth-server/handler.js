@@ -12,7 +12,7 @@ const credentials = {
   auth_uri: "https://accounts.google.com/o/oauth2/auth",
   token_uri: "https://oauth2.googleapis.com/token",
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-  redirect_uris: ["https://tamomsi.github.io/meet"],
+  redirect_uris: ["https://tamomsi.github.io/meet/"],
   javascript_origins: ["https://tamomsi.github.io", "http://localhost:3000"],
 };
 
@@ -35,8 +35,6 @@ module.exports.getAuthURL = async () => {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
     },
     body: JSON.stringify({
       authUrl: authUrl,
@@ -67,8 +65,6 @@ module.exports.getAccessToken = async (event) => {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-          "Access-Control-Allow-Methods": "GET, OPTIONS",
         },
         body: JSON.stringify(token),
       };
@@ -117,8 +113,6 @@ module.exports.getCalendarEvents = async (event) => {
         headers: {
           "Access-Control-Allow-Origin": "*", // Allow all origins
           "Access-Control-Allow-Credentials": true, // Allow credentials
-          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-          "Access-Control-Allow-Methods": "GET, OPTIONS",
         },
         body: JSON.stringify({ events: results.data.items }),
       };
