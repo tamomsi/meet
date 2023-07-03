@@ -57,7 +57,7 @@ export const getAccessToken = async () => {
       const { authUrl } = await results.json();
       return (window.location.href = authUrl);
     }
-    const encodeCode = encodeURIComponent(code);
+    const encodeCode = encodeURIComponent(code.replace(/\//g, '%2F'));
     return code && getToken(encodeCode);
   }
   return accessToken;
