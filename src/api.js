@@ -52,9 +52,9 @@ export const getAccessToken = async () => {
     const code = await searchParams.get('code');
     if (!code) {
       const results = await fetch(
-        `https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeURIComponent(code)}`
+        'https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token'
       );
-      const { authUrl } = results.data;
+      const { authUrl } = await results.json();
       return (window.location.href = authUrl);
     }
     const encodeCode = encodeURIComponent(code);
@@ -77,8 +77,10 @@ const removeQuery = () => {
   }
 };
 
-const getToken = async (encodeCode) => {
+const getToken = async (code) => {
   try {
+    const encodeCode = encodeURIComponent(code);
+
     const response = await fetch(
       `https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
     );
