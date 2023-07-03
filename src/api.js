@@ -83,8 +83,10 @@ const getToken = async (code) => {
     const encodeCode = encodeURIComponent(code);
 
     const response = await fetch(
-      `https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
-    );
+      "https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token" +
+      "/" +
+      encodeCode
+  );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
