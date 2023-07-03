@@ -30,7 +30,9 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url = `https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/events/${encodeURIComponent(token)}`;
+    const url = "https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" +
+    "/" +
+    token;
     const result = await axios.get(url);
     if (result.data) {
       const locations = extractLocations(result.data.events);
@@ -43,22 +45,21 @@ export const getEvents = async () => {
 };
 
 export const getAccessToken = async () => {
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = localStorage.getItem("access_token");
   const tokenCheck = accessToken && (await checkToken(accessToken));
-
   if (!accessToken || tokenCheck.error) {
-    await localStorage.removeItem('access_token');
+    await localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
-    const code = await searchParams.get('code');
+    const code = await searchParams.get("code");
+    await localStorage.setItem("code", JSON.stringify(code));
     if (!code) {
-      const results = await fetch(
-        'https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/token'
+      const results = await axios.get(
+        "https://ex1hgma6ae.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
       );
-      const { authUrl } = await results.json();
+      const { authUrl } = results.data;
       return (window.location.href = authUrl);
     }
-    const encodeCode = encodeURIComponent(code.replace(/\//g, '%2F'));
-    return code && getToken(encodeCode);
+    return code && getToken(code);
   }
   return accessToken;
 };
