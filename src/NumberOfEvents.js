@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { getEvents } from './api';
+import { ErrorAlert } from './Alert'; // Import ErrorAlert
 
 class NumberOfEvents extends Component {
   state = {
     numberOfEvents: 32,
     events: [],
-    mounted: false // add mounted property to state
+    mounted: false,
+    errorAlertText: '', // New state for the error alert text
   };
 
   async componentDidMount() {
     this.setState({
-      mounted: true // set mounted to true when component is mounted
+      mounted: true
     });
     const events = await getEvents();
-    if (this.state.mounted) { // check if component is still mounted before setting state
+    if (this.state.mounted) {
       this.setState({
         events,
       });
@@ -27,21 +29,28 @@ class NumberOfEvents extends Component {
   async getEvents() {
     const { numberOfEvents } = this.state;
     const events = await getEvents();
-    if (this.state.mounted) { // check if component is still mounted before setting state
+    if (this.state.mounted) {
       this.setState({
         events: events.slice(0, numberOfEvents),
       });
     }
     return events.slice(0, numberOfEvents);
-  }  
+  }
 
   handleInputChanged = (event) => {
     const value = event.target.value;
-    this.setState({
-      numberOfEvents: value,
-    });
-    this.props.updateEvents(null, value);
-  }
+    if (value <= 0 || isNaN(value)) { // Check for invalid input
+      this.setState({
+        errorAlertText: 'Please enter a valid number of events.',
+      });
+    } else {
+      this.setState({
+        numberOfEvents: value,
+        errorAlertText: '', // Clear error alert text
+      });
+      this.props.updateEvents(null, value);
+    }
+  };
 
   render() {
     return (
@@ -53,8 +62,8 @@ class NumberOfEvents extends Component {
           value={this.state.numberOfEvents}
           onChange={this.handleInputChanged}
         />
-        <ul className="AmountOfEvents">
-        </ul>
+        {this.state.errorAlertText && <ErrorAlert text={this.state.errorAlertText} />}
+        <ul className="AmountOfEvents"></ul>
       </div>
     );
   }
