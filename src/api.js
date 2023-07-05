@@ -21,17 +21,6 @@ export const checkToken = async (accessToken) => {
 export const getEvents = async () => {
   NProgress.start();
 
-  // Check if events are available in the cache
-  const cachedEvents = localStorage.getItem('lastEvents');
-  const cachedLocations = localStorage.getItem('locations');
-
-  if (cachedEvents && cachedLocations) {
-    const events = JSON.parse(cachedEvents);
-    const locations = JSON.parse(cachedLocations);
-    NProgress.done();
-    return events;
-  }
-
   if (window.location.href.startsWith('http://localhost')) {
     NProgress.done();
     return mockData;
@@ -46,9 +35,8 @@ export const getEvents = async () => {
     token;
     const result = await axios.get(url);
     if (result.data) {
-      const locations = extractLocations(result.data);
-      // Cache the events and locations
-      localStorage.setItem('lastEvents', JSON.stringify(result.data.events));
+      const locations = extractLocations(result.data.events);
+      localStorage.setItem('lastEvents', JSON.stringify(result.data));
       localStorage.setItem('locations', JSON.stringify(locations));
     }
     NProgress.done();
@@ -109,3 +97,5 @@ const getToken = async (code) => {
     error.json();
   }
 };
+
+
