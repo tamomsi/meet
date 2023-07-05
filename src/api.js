@@ -26,6 +26,28 @@ export const getEvents = async () => {
     return mockData;
   }
 
+  if (!navigator.onLine) { // Check if the user is offline
+    const data = localStorage.getItem('lastEvents');
+    if (data !== null) {
+      try {
+        const parsedData = JSON.parse(data);
+        if (parsedData && parsedData.events) {
+          const events = parsedData.events;
+          NProgress.done();
+          return events;
+        } else {
+          throw new Error("Invalid data in localStorage: missing 'events' property.");
+        }
+      } catch (error) {
+        console.error("Invalid data in localStorage: unable to parse JSON.", error);
+        // Here you redirect user to an error page, or show some error notification.
+      }
+    } else {
+      console.error("No data in localStorage.");
+      // Here you redirect user to an error page, or show some error notification.
+    }
+  }
+
   const token = await getAccessToken();
 
   if (token) {
@@ -36,7 +58,7 @@ export const getEvents = async () => {
     const result = await axios.get(url);
     if (result.data) {
       const locations = extractLocations(result.data.events);
-      localStorage.setItem('lastEvents', JSON.stringify(result.data));
+      localStorage.setItem('lastEvents', JSON.stringify(result.data)); // cache the fetched data in local storage
       localStorage.setItem('locations', JSON.stringify(locations));
     }
     NProgress.done();
