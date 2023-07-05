@@ -79,7 +79,9 @@ class App extends Component {
           {this.state.errorAlertText && <ErrorAlert text={this.state.errorAlertText} />}
           {this.state.warningAlertText && <WarningAlert text={this.state.warningAlertText} />}
         </div>
+        <div className="charts-container">
         <CityEventsChart allLocations={locations} events={events} />
+        </div>
         <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
       </div>
     );
