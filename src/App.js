@@ -7,6 +7,7 @@ import { getEvents, extractLocations } from './api';
 import './nprogress.css';
 import { InfoAlert, ErrorAlert, WarningAlert } from './Alert';
 import CityEventsChart from './CityEventsChart';
+import EventGenresChart from './EventGenresChart';
 
 class App extends Component {
   state = {
@@ -80,9 +81,10 @@ class App extends Component {
           {this.state.warningAlertText && <WarningAlert text={this.state.warningAlertText} />}
         </div>
         <div className="charts-container">
-        <CityEventsChart allLocations={locations} events={events} />
+          <EventGenresChart events={events} />
+          <CityEventsChart allLocations={locations} events={events} />
         </div>
-        <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
+          <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
       </div>
     );
   }
