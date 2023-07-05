@@ -27,10 +27,21 @@ const EventGenresChart = ({ events }) => {
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
+    const labelLineStartX = cx + (outerRadius + 10) * Math.cos(-midAngle * RADIAN);
+    const labelLineStartY = cy + (outerRadius + 10) * Math.sin(-midAngle * RADIAN);
+
+    const labelLineEndX = cx + (outerRadius + 50) * Math.cos(-midAngle * RADIAN);
+    const labelLineEndY = cy + (outerRadius + 50) * Math.sin(-midAngle * RADIAN);
+
+    const isLeftHalf = midAngle > 90 && midAngle < 270;
+
     return (
-      <text x={x} y={y} fill="#8884d8" textAnchor="middle" dominantBaseline="central">
-        {`${genres[index]} ${(percent * 100).toFixed(0)}%`}
-      </text>
+      <g>
+        <line x1={labelLineStartX} y1={labelLineStartY} x2={labelLineEndX} y2={labelLineEndY} stroke="#000000" />
+        <text x={isLeftHalf ? labelLineEndX - 10 : labelLineEndX + 10} y={labelLineEndY} fill="#000000" textAnchor={isLeftHalf ? 'end' : 'start'} dominantBaseline="central">
+          <tspan style={{ fill: '#000000' }}>{genres[index]}</tspan> <tspan style={{ fill: '#000000', fontWeight: 'bold' }}>{(percent * 100).toFixed(0)}%</tspan>
+        </text>
+      </g>
     );
   };
 
@@ -51,7 +62,7 @@ const EventGenresChart = ({ events }) => {
           {data.map((entry, index) => (
             <Cell key={index} fill={colors[index % colors.length]} />
           ))}
-          <Label value="Event Genres" position="center" fontSize={16} />
+          <Label value="Event Genres" position="center" fontSize={16} fill="#000000" />
         </Pie>
       </PieChart>
     </ResponsiveContainer>
