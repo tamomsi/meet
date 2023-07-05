@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Alert extends Component {
+class Alert extends React.Component {
   constructor(props) {
     super(props);
     this.color = null;
@@ -11,17 +11,17 @@ class Alert extends Component {
     return {
       color: this.color,
       backgroundColor: this.bgColor,
-      borderWidth: "2px",
-      borderStyle: "solid",
-      fontWeight: "bolder",
-      borderRadius: "7px",
+      borderWidth: '2px',
+      borderStyle: 'solid',
+      fontWeight: 'bolder',
+      borderRadius: '7px',
       borderColor: this.color,
-      textAlign: "center",
-      fontSize: "12px",
-      margin: "10px 0",
-      padding: "10px"
+      textAlign: 'center',
+      fontSize: '12px',
+      margin: '10px 0',
+      padding: '10px',
     };
-  }
+  };
 
   render() {
     return (
@@ -48,4 +48,12 @@ class ErrorAlert extends Alert {
   }
 }
 
-export { InfoAlert, ErrorAlert };
+class WarningAlert extends Alert {
+  constructor(props) {
+    super(props);
+    this.color = 'rgb(255, 165, 0)'; // orange
+    this.bgColor = 'rgb(255, 240, 220)'; // light orange
+  }
+}
+
+export { InfoAlert, ErrorAlert, WarningAlert };
