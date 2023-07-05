@@ -6,6 +6,7 @@ import NumberOfEvents from './NumberOfEvents';
 import { getEvents, extractLocations } from './api';
 import './nprogress.css';
 import { InfoAlert, ErrorAlert, WarningAlert } from './Alert';
+import CityEventsChart from './CityEventsChart';
 
 class App extends Component {
   state = {
@@ -60,6 +61,7 @@ class App extends Component {
   };
 
   render() {
+    const { locations, events } = this.state;
     return (
       <div className="App">
         <NumberOfEvents
@@ -77,6 +79,7 @@ class App extends Component {
           {this.state.errorAlertText && <ErrorAlert text={this.state.errorAlertText} />}
           {this.state.warningAlertText && <WarningAlert text={this.state.warningAlertText} />}
         </div>
+        <CityEventsChart allLocations={locations} events={events} />
         <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
       </div>
     );
