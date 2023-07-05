@@ -5,7 +5,7 @@ import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { getEvents, extractLocations } from './api';
 import './nprogress.css';
-import { InfoAlert, ErrorAlert } from './Alert';
+import { InfoAlert, ErrorAlert, WarningAlert } from './Alert';
 
 class App extends Component {
   state = {
@@ -14,6 +14,7 @@ class App extends Component {
     numberOfEvents: 32,
     infoAlertText: '',
     errorAlertText: '', // New state for the error alert text
+    warningAlertText: '',
   };
 
   updateEvents = (location, eventCount) => {
@@ -40,6 +41,7 @@ class App extends Component {
       this.setState({
         events: events.slice(0, this.state.numberOfEvents - 1),
         locations: extractLocations(events),
+        warningAlertText: navigator.onLine ? '' : 'You are currently offline. Event data may not be up to date.',
       });
     }
   }
@@ -47,6 +49,7 @@ class App extends Component {
   handleInputChanged = (inputValue) => {
     this.setState({
       infoAlertText: inputValue,
+      warningAlertText: '', // Clear the warning alert text when input changes
     });
   };
 
@@ -72,6 +75,7 @@ class App extends Component {
         <div className="alerts-container">
           {this.state.infoAlertText && <InfoAlert text={this.state.infoAlertText} />}
           {this.state.errorAlertText && <ErrorAlert text={this.state.errorAlertText} />}
+          {this.state.warningAlertText && <WarningAlert text={this.state.warningAlertText} />}
         </div>
         <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
       </div>
