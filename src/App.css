@@ -156,6 +156,34 @@ input[type="number"] {
   overflow: visible;
 }
 
+.enter-city {
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.enter-number {
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.main-heading {
+  color: red;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+@media (max-width: 768px) {
+  .main-heading {
+    font-size: 30px;
+    margin-top: 10%;
+  }
+}
+
 .login-button {
   color: #494949;
   text-transform: uppercase;
@@ -217,6 +245,7 @@ input[type="number"] {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  margin-top: 5%;
 }
 
 @media (max-width: 768px) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.css';
 
 class CitySearch extends Component {
   state = {
@@ -37,26 +38,29 @@ class CitySearch extends Component {
 
   render() {
     return (
-      <div className="CitySearch">
-        <input
-          type="text"
-          className="city"
-          value={this.state.query}
-          onChange={this.handleInputChanged}
-          onFocus={() => {
-            this.setState({ showSuggestions: true });
-          }}
-        />
-        <ul className="suggestions" style={this.state.showSuggestions ? {} : { display: 'none' }}>
-          {this.state.suggestions.map((suggestion) => (
-            <li key={suggestion} onClick={() => this.handleItemClicked(suggestion)}>
-              {suggestion}
+      <div>
+        <p className="enter-city">Enter a city:</p>
+        <div className="CitySearch">
+          <input
+            type="text"
+            className="city"
+            value={this.state.query}
+            onChange={this.handleInputChanged}
+            onFocus={() => {
+              this.setState({ showSuggestions: true });
+            }}
+          />
+          <ul className="suggestions" style={this.state.showSuggestions ? {} : { display: 'none' }}>
+            {this.state.suggestions.map((suggestion) => (
+              <li key={suggestion} onClick={() => this.handleItemClicked(suggestion)}>
+                {suggestion}
+              </li>
+            ))}
+            <li onClick={() => this.handleItemClicked('all')}>
+              <b>See all cities</b>
             </li>
-          ))}
-          <li onClick={() => this.handleItemClicked('all')}>
-            <b>See all cities</b>
-          </li>
-        </ul>
+          </ul>
+        </div>
       </div>
     );
   }
